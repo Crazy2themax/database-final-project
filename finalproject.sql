@@ -38,3 +38,28 @@ CREATE TABLE customer_address (
   FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
 );
  
+
+CREATE TABLE orders (
+  order_id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  address_id INT, -- delivery address (nullable for pickup)
+  order_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  status ENUM('Pending','Preparing','Out for Delivery','Delivered','Cancelled') DEFAULT 'Pending',
+  total_price DECIMAL(9,2) DEFAULT 0.00,
+  cancelled_reason TEXT,
+  delivered_at DATETIME NULL,
+  last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+  FOREIGN KEY (address_id) REFERENCES customer_address(address_id) ON DELETE SET NULL
+);
+
+CREATE TABLE employee (
+  employee_id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  full_name VARCHAR(200),
+  role ENUM('Cashier','Cook','Manager','Driver','Other') NOT NULL DEFAULT 'Other',
+  hired_date DATE,
+  active BOOLEAN DEFAULT TRUE
+);
+
+
