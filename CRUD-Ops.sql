@@ -12,7 +12,7 @@ Insert into category (Name, Description)
 value ('Sides', 'Sides');
 
 Insert into category (Name, Description)
-value ('Drinks', 'Beverages');value ('Drinks', 'Beverages');
+value ('Drinks', 'Beverages');
 
 -- Inserting Menu Items
 Insert into menu_item (name, description, price, category_id, available, last_modified)
