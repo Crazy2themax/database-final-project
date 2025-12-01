@@ -25,4 +25,16 @@ CREATE TABLE customer (
   email VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE customer_address (
+  address_id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  street VARCHAR(255) NOT NULL,
+  city VARCHAR(100) NOT NULL,
+  province_state VARCHAR(100),
+  postal_code VARCHAR(20),
+  country VARCHAR(100) DEFAULT 'Canada',
+  is_default BOOLEAN DEFAULT FALSE,
+  FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
+);
  
