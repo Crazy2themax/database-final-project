@@ -62,4 +62,14 @@ CREATE TABLE employee (
   active BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE order_item (
+  order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL,
+  menu_item_id INT NOT NULL,
+  quantity INT NOT NULL CHECK (quantity > 0),
+  unit_price DECIMAL(8,2) NOT NULL,
+  subtotal DECIMAL(9,2) AS (unit_price * quantity) STORED,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+  FOREIGN KEY (menu_item_id) REFERENCES menu_item(menu_item_id) ON DELETE RESTRICT
+);
 
