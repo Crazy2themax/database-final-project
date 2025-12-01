@@ -73,3 +73,34 @@ CREATE TABLE order_item (
   FOREIGN KEY (menu_item_id) REFERENCES menu_item(menu_item_id) ON DELETE RESTRICT
 );
 
+CREATE TABLE driver (
+  driver_id INT AUTO_INCREMENT PRIMARY KEY,
+  employee_id INT UNIQUE, -- optional link to employee table
+  vehicle_info VARCHAR(255),
+  phone VARCHAR(20),
+  FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON DELETE SET NULL
+);
+
+CREATE TABLE delivery (
+  delivery_id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL UNIQUE,
+  driver_id INT,
+  assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  picked_up_at DATETIME NULL,
+  delivered_at DATETIME NULL,
+  status ENUM('Assigned','Picked Up','Delivered') DEFAULT 'Assigned',
+  notes TEXT,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+  FOREIGN KEY (driver_id) REFERENCES driver(driver_id) ON DELETE SET NULL
+);
+
+CREATE TABLE order_status_log (
+  log_id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL,
+  changed_by VARCHAR(100),
+  old_status VARCHAR(50),
+  new_status VARCHAR(50),
+  changed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  comment TEXT,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
+);
