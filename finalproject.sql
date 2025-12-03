@@ -6,6 +6,7 @@ CREATE TABLE category (
   name VARCHAR(100) NOT NULL UNIQUE,
   description TEXT
 );
+
 CREATE TABLE menu_item (
   menu_item_id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(150) NOT NULL,
@@ -38,7 +39,6 @@ CREATE TABLE customer_address (
   FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
 );
  
-
 CREATE TABLE orders (
   order_id INT AUTO_INCREMENT PRIMARY KEY,
   customer_id INT NOT NULL,
