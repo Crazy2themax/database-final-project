@@ -101,8 +101,17 @@ VALUES
 (3, 5, 2, 2.99),
 (3, 4, 1, 9.99);
 
+Insert into order_status_log (order_id, changed_by,  old_status, new_status, changed_at, comment)
+values
+(1, 'lroberts', null, 'Received', '2025-12-01 09:10:00', 'Order received'), 
+(1, 'bthompson', 'Received', 'Prepared', '2025-12-01 09:20:00', 'Order ready'), 
+(1, 'mfernandez', 'Prepared', 'Picked Up', '2025-12-01 09:30:00', 'Driver pick up'), 
+(2, 'lroberts', null, 'Received', '2025-12-01 11:05:00', 'Order received'), 
+(2, 'bthompson', 'Received', 'Prepared', '2025-12-01 11:15:00', 'Order ready'), 
+(2, 'mfernandez', 'Prepared', 'Picked Up', '2025-12-01 11:20:00', 'Driver pick up'), 
+(3, 'lroberts', null, 'Received', '2025-12-01 12:20:00', 'Order received'), 
+(3, 'lroberts', 'Received', 'Cancelled', '2025-12-01 12:25:00', 'Customer cancellation');
 
-
-
+Insert into 
 
 
