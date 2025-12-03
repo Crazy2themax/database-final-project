@@ -112,6 +112,8 @@ values
 (3, 'lroberts', null, 'Received', '2025-12-01 12:20:00', 'Order received'), 
 (3, 'lroberts', 'Received', 'Cancelled', '2025-12-01 12:25:00', 'Customer cancellation');
 
-Insert into 
-
+Insert into delivery (order_id, driver_id, assigned_at, picked_up_at, delivered_at, status, notes)
+values
+(1, 1, '2025-12-01 09:20:00', '2025-12-01 09:30:00', '2025-12-01 09:45:00', 'Delivered', 'Left at front door'), 
+(2, 1, '2025-12-01 11:15:00', '2025-12-01 11:20:00', Null, 'Picked Up', null);
 
