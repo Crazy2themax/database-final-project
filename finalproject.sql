@@ -104,3 +104,7 @@ CREATE TABLE order_status_log (
   comment TEXT,
   FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
 );
+
+
+
+

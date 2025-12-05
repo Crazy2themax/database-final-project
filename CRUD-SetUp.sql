@@ -14,7 +14,9 @@ values
 ('Pizza', '10 inch pizza with choice of toppings', '14.99', 1, 1, now()),
 ('Ruben', 'Roast beef sandwich with mustard', '7.99', 2, 1, now()),
 ('Poutine', 'Fries, topped with gravy and cheese curds', '9.99', 4, 1, now()),
-('Soda', 'Your choice of basic, diet or zero', '2.99', 5, 1, now());
+('Soda', 'Your choice of basic, diet or zero', '2.99', 5, 1, now()
+);
+
 
 -- Inserting Customers
 Insert into customer (first_name, last_name, phone, email, created_at)
