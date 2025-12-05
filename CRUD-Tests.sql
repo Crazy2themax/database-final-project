@@ -29,7 +29,6 @@ where menu_item_id = 6;
 • Delete: Delete an order (only if permitted by business rules)
 **/
 
-order_item
 
 
 /** Delivery Management
