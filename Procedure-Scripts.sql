@@ -30,3 +30,25 @@ where delivery_id = in_delivery_id;
 end//
 
 delimiter ;
+
+-- Procedure #3
+
+drop procedure sp_generate_sales_report;
+Delimiter //
+
+create procedure sp_generate_sales_report()
+begin
+select date(o.order_datetime) as Sales_Date,
+sum(m.price) as Total,
+count(distinct o.order_id) as Total_Orders,
+count(oi.order_item_id) as Total_Items
+from orders o
+join order_item oi
+on o.order_id = oi.order_id
+join menu_item m
+on oi.menu_item_id = m.menu_item_id
+group by date(o.order_datetime)
+order by sales_date;
+end //
+
+delimiter ;

@@ -24,7 +24,7 @@ where menu_item_id = 6;
 
 /** Orders
 • Create (Insert): Place a new order containing multiple menu items
-• Call total price procedure
+• Call total price procedure (Test Procedure #1)
 • Read (Select): Retrieve order details (date/time, total price, status)
 • Update: Change order status (Pending → Preparing → Out for Delivery → Delivered → Cancelled)
 • Delete: Delete an order (only if permitted by business rules)
@@ -59,21 +59,59 @@ where order_id = 4;
 delete from orders
 where order_id = 4;
 
-select * from order_item;
+select * from order_item
 
 /** Delivery Management
 • Create (Insert): Assign a delivery driver to an order
+• Call assign driver procedure (Test Procedure #2)
 • Read (Select): List deliveries per driver per day
 • Update: Update delivery steps (assigned → picked up → delivered)
 • Delete: Remove driver assignments if necessary
 **/
 
+Update orders
+set status = 'Out for Delivery'
+where order_id = 4;
 
+Select * from orders;
 
+Insert into delivery (order_id, assigned_at, picked_up_at, delivered_at, status, notes)
+values
+(4, now(), now(), null, 'Picked Up', null);
 
+Select * from delivery;
+
+call sp_assign_driver(3, 1);
+
+Select driver_id,
+    Date(assigned_at) AS delivery_date
+From delivery;
+
+delete from driver
+where driver_id = 1;
 
 /** Sales / Reporting
 • Read (Select): Generate reports such as:
-• Sales per day
+• Sales per day (Test Procedure #3)
 • Sales per category
 **/
+
+-- Per Day
+call sp_generate_sales_report;
+
+-- Per category
+Select 
+    Date(o.order_datetime) as Sales_Date,
+    c.name as Category,
+    SUM(m.price) as Total,
+    COUNT(DISTINCT o.order_id) as Total_Orders,
+    COUNT(oi.order_item_id) as Total_Items
+From orders as o
+join order_item as oi
+    on o.order_id = oi.order_id
+join menu_item as m
+    on oi.menu_item_id = m.menu_item_id
+join category as c
+    on m.category_id = c.category_id
+group by date(o.order_datetime), c.name
+order by Sales_Date, Category;

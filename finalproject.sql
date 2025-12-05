@@ -1,3 +1,4 @@
+drop database restaurant;
 Create Database Restaurant;
 use restaurant;
 
