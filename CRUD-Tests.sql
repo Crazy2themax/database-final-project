@@ -24,12 +24,42 @@ where menu_item_id = 6;
 
 /** Orders
 • Create (Insert): Place a new order containing multiple menu items
+• Call total price procedure
 • Read (Select): Retrieve order details (date/time, total price, status)
 • Update: Change order status (Pending → Preparing → Out for Delivery → Delivered → Cancelled)
 • Delete: Delete an order (only if permitted by business rules)
 **/
 
+Insert into orders (customer_id, address_id, order_datetime, status, total_price, cancelled_reason, delivered_at, last_modified)
+values
+(1, 1, now(), 'Delivered', '35.95', null, null, now());
 
+Insert into order_item (order_id, menu_item_id, quantity, unit_price)
+values
+(4, 2, 1, 14.99),
+(4, 4, 1, 9.99),
+(4, 5, 1, 2.99);
+
+-- Declare a session variable to capture the OUT parameter
+CALL sp_calculate_order_total(4, @order_total);
+
+-- Retrieve the result
+SELECT @order_total AS total_price;
+
+Update orders
+set total_price = '27.97'
+where order_id = 4;
+
+Select * from orders;
+
+Update orders
+set status = 'Pending'
+where order_id = 4;
+
+delete from orders
+where order_id = 4;
+
+select * from order_item;
 
 /** Delivery Management
 • Create (Insert): Assign a delivery driver to an order
