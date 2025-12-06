@@ -115,3 +115,47 @@ join category as c
     on m.category_id = c.category_id
 group by date(o.order_datetime), c.name
 order by Sales_Date, Category;
+
+/**Triggers
+To prove that trigger deletion is working I first tested the trigger on a menu item 
+that I knew was connect to an order to prove it won't work and will give an error message
+.I then created a temporary data entry that wasn't connected to any order to prove it 
+would work properly.The reason this works is because the trigger runs before deletion and
+checks how many times the menu_item KD appeared in the order_item  table. Because the item is 
+connected to an order, the trigger detects that the count is greater then zero and sends an error message.
+**/
+
+
+--Trigger test Case: trg_prevent_menuitem_deletion
+
+--trigger test case 1  
+select * From menu_item;
+--trigger test case: cannot delete item from menu (receive error stating cannot be deleted)
+DELETE FROM menu_item WHERE menu_item_id = 1;
+
+--trigger test cases 2
+--Creating temporary data entry 
+INSERT INTO menu_item (menu_item_id, name, description, price, category_id, available, last_modified)
+VALUES (10, 'Test Burger', 'Temporary test item', 9.99, 1, 1, NOW());
+
+--Proving that a menu_item can be deleted if not tied to an order
+DELETE FROM menu_item WHERE menu_item_id = 10;
+
+
+--Trigger test Case: trg_log_order_status_change
+
+/*
+To show that the order status change trigger works I updated the status of an
+ order to "Cancelled" .I made sure to include a before and after to make sure
+  that it was working properly. The reason why this works is because the 
+trigger runs after the update and compares the old status to the new one.
+ Since Both the values are different, the trigger automatically writes a new 
+ log into the order_status_log. 
+*/
+
+--Check table before 
+select * from order_status_log;
+--This triggers the trigger to set the status of the order_id 1 to Cancelled
+UPDATE orders SET status = 'Cancelled' WHERE order_id = 1;
+--Check table after
+select * from order_status_log;
