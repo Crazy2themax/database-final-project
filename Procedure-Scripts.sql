@@ -1,4 +1,7 @@
 -- Procedure #1
+drop procedure sp_calculate_order_total;
+-- 
+
 Delimiter //
 
 create procedure sp_calculate_order_total
@@ -18,6 +21,9 @@ end//
 delimiter ;
 
 -- Procedure #2
+drop procedure sp_assign_driver;
+-- 
+
 Delimiter //
 
 create procedure sp_assign_driver
@@ -32,8 +38,9 @@ end//
 delimiter ;
 
 -- Procedure #3
-
 drop procedure sp_generate_sales_report;
+-- 
+
 Delimiter //
 
 create procedure sp_generate_sales_report()
